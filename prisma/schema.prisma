@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+enum Status {
+  TENHO
+  REPETIDA
+  FALTA
+}
+
+model Grupo {
+  id       String    @id @default(uuid())
+  nome     String    @unique
+  selecoes Selecao[]
+}
+
+model Selecao {
+  id         String      @id @default(uuid())
+  nome       String
+  sigla      String      @unique
+  cor_bg     String
+  cor_fg     String
+  grupo_id   String
+  grupo      Grupo       @relation(fields: [grupo_id], references: [id])
+  figurinhas Figurinha[]
+}
+
+model Figurinha {
+  id         String    @id @default(uuid())
+  numero     Int
+  codigo     String
+  status     Status    @default(FALTA)
+  selecao_id String
+  selecao    Selecao   @relation(fields: [selecao_id], references: [id])
+
+  @@unique([selecao_id, numero])
+}
