@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { GrupoController } from "../controllers/grupo";
 import { asyncHandler } from "../../utils/asyncHandler";
+import { pinMiddleware } from "../../middlewares/pin.middleware";
 
 const grupoRouter = Router();
 const controller = new GrupoController();
 
 grupoRouter.post("/", asyncHandler(controller.create));
-grupoRouter.get("/", asyncHandler(controller.findAll));
+grupoRouter.get("/", pinMiddleware, asyncHandler(controller.findAllWithSelecoes));
 grupoRouter.get("/:id", asyncHandler(controller.findById));
 grupoRouter.get("/:id/selecoes", asyncHandler(controller.findSelecoes));
 grupoRouter.put("/:id", asyncHandler(controller.update));

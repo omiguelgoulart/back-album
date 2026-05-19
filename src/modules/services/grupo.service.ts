@@ -11,6 +11,10 @@ export class GrupoService {
     return this.repository.findAll();
   }
 
+  async findAllWithSelecoes() {
+    return this.repository.findAllWithSelecoes();
+  }
+
   async findById(id: string) {
     const grupo = await this.repository.findById(id);
     if (!grupo) throw new Error("Grupo não encontrado");

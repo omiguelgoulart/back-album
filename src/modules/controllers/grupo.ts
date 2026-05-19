@@ -18,6 +18,11 @@ export class GrupoController {
     return res.json(grupos);
   };
 
+  findAllWithSelecoes = async (_req: Request, res: Response) => {
+    const grupos = await this.service.findAllWithSelecoes();
+    return res.json(grupos);
+  };
+
   findById = async (req: Request<{ id: string }>, res: Response) => {
     const grupo = await this.service.findById(req.params.id);
     return res.json(grupo);

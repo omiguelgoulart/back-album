@@ -15,6 +15,17 @@ export class GrupoRepository {
     return await this.prismaClient.grupo.findMany();
   }
 
+  async findAllWithSelecoes() {
+    return await this.prismaClient.grupo.findMany({
+      include: {
+        selecoes: {
+          include: { figurinhas: true },
+        },
+      },
+      orderBy: { nome: "asc" },
+    });
+  }
+
   async findById(id: string) {
     return await this.prismaClient.grupo.findUnique({
       where: {
